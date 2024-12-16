@@ -38,6 +38,20 @@ if (isset($_POST['ticket_id']) && isset($_POST['action'])) {
                 'id' => $ticket_id,
                 'status' => 2
             ]);
+
+            // Adiciona o followup informando início do atendimento
+            $followup = new ITILFollowup();
+            $user = new User();
+            $user->getFromDB(Session::getLoginUserID());
+            $userName = $user->getFriendlyName();
+            
+            $followup->add([
+                'items_id' => $ticket_id,
+                'itemtype' => 'Ticket',
+                'users_id' => Session::getLoginUserID(),
+                'content'  => "O técnico " . $userName . " iniciou o atendimento do chamado.",
+                'is_private' => 0
+            ]);
             break;
             
         case 'pause':
@@ -47,6 +61,20 @@ if (isset($_POST['ticket_id']) && isset($_POST['action'])) {
             $ticket->update([
                 'id' => $ticket_id,
                 'status' => 4
+            ]);
+
+            // Adiciona o followup informando que o chamado foi colocado em pendente
+            $followup = new ITILFollowup();
+            $user = new User();
+            $user->getFromDB(Session::getLoginUserID());
+            $userName = $user->getFriendlyName();
+            
+            $followup->add([
+                'items_id' => $ticket_id,
+                'itemtype' => 'Ticket',
+                'users_id' => Session::getLoginUserID(),
+                'content'  => "O técnico " . $userName . " definiu o status do chamado como pendente.",
+                'is_private' => 0
             ]);
             break;
     }
