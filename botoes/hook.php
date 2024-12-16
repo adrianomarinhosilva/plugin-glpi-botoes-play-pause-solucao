@@ -14,21 +14,14 @@ function plugin_botoes_post_item_form(array $params) {
         
         echo "<div class='custom-buttons' style='margin-top: 10px;'>";
         
-        // Botão Atender
-        echo "<button onclick='assignTicket(" . $ticket_id . ")' class='btn btn-success' style='margin-right: 5px; width: auto; padding: 4px 8px;'>
+        // Botão Atender e Pendente
+        echo "<center><button onclick='assignTicket(" . $ticket_id . ")' class='btn btn-success' style='margin-right: 5px; padding: 4px 8px;'>
                 <i class='fas fa-play' style='margin-right: 5px;'></i>Atender
-              </button>";
-        
-        // Botão Pendente
-        echo "<button onclick='pauseTicket(" . $ticket_id . ")' class='btn btn-warning' style='margin-right: 5px; width: auto; padding: 4px 8px;'>
+              </button>
+              <button onclick='pauseTicket(" . $ticket_id . ")' class='btn btn-warning' style='margin-right: 5px; padding: 4px 8px;'>
                 <i class='fas fa-pause' style='margin-right: 5px;'></i>Pendente
-              </button>";
-
-        // Botão Solucionar
-        echo "<button onclick='showSolutionModal(event, " . $ticket_id . ")' class='btn btn-primary' style='width: auto; padding: 4px 8px; background-color: #9bd2e9;'>
-                <i class='fas fa-check' style='margin-right: 5px;'></i>Solucionar
-              </button>";
-        
+              </button></center>
+              ";
         echo "</div>";
         
         // JavaScript para manipular as ações dos botões
@@ -59,19 +52,6 @@ function plugin_botoes_post_item_form(array $params) {
                         window.location.reload();
                     }
                 });
-            }
-
-            function showSolutionModal(event, ticketId) {
-                event.preventDefault();
-                event.stopPropagation();
-                
-                // Simula o clique no botão de solução
-                const solutionButton = document.querySelector('button.ms-2.mb-2.btn.btn-primary.answer-action.action-solution');
-                if (solutionButton) {
-                    solutionButton.click();
-                }
-                
-                return false;
             }
         </script>";
     }
